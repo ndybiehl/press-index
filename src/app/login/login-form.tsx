@@ -39,7 +39,7 @@ export function LoginForm({
           inputMode="email"
           autoComplete="username"
           required
-          defaultValue="buyer@boxedandloose.local"
+          placeholder="you@email.com"
         />
       </div>
       <div className="space-y-2">
@@ -50,7 +50,7 @@ export function LoginForm({
           type="password"
           autoComplete="current-password"
           required
-          defaultValue="boxedandloose"
+          placeholder="Password"
         />
       </div>
       {message ? <p className="text-sm text-destructive">{message}</p> : null}
