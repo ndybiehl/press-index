@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Platform {
+  id                 String        @id @default(cuid())
+  slug               String        @unique
+  name               String
+  shortName          String
+  manufacturer       String
+  family             String
+  kind               String
+  generation         Int?
+  releasedYear       Int
+  discontinuedYear   Int?
+  media              String
+  color              String
+  description        String
+  sortRank           Int           @default(200)
+  items              CatalogItem[]
+}
+
+model CatalogItem {
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  kind             String
+  title            String
+  sortTitle        String
+  platformId       String
+  platform         Platform  @relation(fields: [platformId], references: [id], onDelete: Cascade)
+  releasedYear     Int?
+  publisher        String    @default("")
+  developer        String    @default("")
+  genre            String    @default("")
+  players          String    @default("")
+  region           String    @default("NTSC-U")
+  description      String    @default("")
+  productCode      String    @default("")
+  variant          String    @default("")
+  coverFrontUrl    String    @default("")
+  coverBackUrl     String    @default("")
+  sourceUrl        String    @default("")
+  manualArchiveId  String    @default("")
+  hasManual        Boolean   @default(true)
+  msrpCents        Int       @default(0)
+  listings         Listing[]
+  createdAt        DateTime  @default(now())
+
+  @@index([kind, platformId])
+  @@index([title])
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String
+  passwordHash    String
+  location        String    @default("")
+  stripeAccountId String    @default("")
+  role            String    @default("USER")
+  listings        Listing[]
+  orders          Order[]
+  sessions        Session[]
+  createdAt       DateTime  @default(now())
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+}
+
+model Listing {
+  id            String      @id @default(cuid())
+  itemId        String
+  item          CatalogItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  sellerId      String
+  seller        User        @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  condition     String
+  completeness  String
+  priceCents    Int
+  shippingCents Int         @default(499)
+  notes         String      @default("")
+  status        String      @default("active")
+  createdAt     DateTime    @default(now())
+  orders        Order[]
+
+  @@index([status, itemId])
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  listingId       String
+  listing         Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  buyerId         String
+  buyer           User     @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+  stripeSessionId String   @default("")
+  amountCents     Int
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+}

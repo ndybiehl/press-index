@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Press Index
 
-## Getting Started
+A catalog-first marketplace for buying and selling video games, systems, and accessories.
 
-First, run the development server:
+The index covers home consoles, handhelds, computers, and arcade from the Magnavox Odyssey (1972) through current hardware. Every title has a front and back catalog card. Paper manuals are linked to public Internet Archive scans when they exist. Press Index does not host ROMs or redistributed copyrighted PDFs.
+
+Production (Vercel): set `DATABASE_URL` to Postgres (Neon) plus `AUTH_SECRET` and `NEXT_PUBLIC_APP_URL`. After the first deploy, `npx prisma db push` and `npm run db:copy-sqlite` load the catalog from the local SQLite file.
+
+## Run locally
 
 ```bash
+cd ~/Projects/press-index
+npm install
+npx prisma generate
+npx prisma db push
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3450](http://localhost:3450). Needs a Postgres `DATABASE_URL`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Demo logins (password `pressindex`):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `buyer@pressindex.local`
+- `seller@pressindex.local`
+- `vault@pressindex.local`
 
-## Learn More
+## Stripe
 
-To learn more about Next.js, take a look at the following resources:
+Checkout works in demo mode without keys (marks the listing sold locally). To take real payments, set `STRIPE_SECRET_KEY` in `.env`. Marketplace payouts use destination charges plus an 8% platform fee when the seller has a Stripe connected account id.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Covers and write-ups
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Covers and longer descriptions are pulled from two free indexes, no API key required:
 
-## Deploy on Vercel
+- [Libretro thumbnails](https://thumbnails.libretro.com) for box scans
+- Wikipedia for photos, console pictures, and article extracts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Refresh with `npm run db:enrich` (add `--force` to rewrite existing rows).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Catalog notes
+
+The seed is a deep starter index (hundreds of games, every major platform, hardware variants, and accessories), not a dump of every SKU ever printed. The data model is ready to import a larger source (IGDB, Wikidata) later.
