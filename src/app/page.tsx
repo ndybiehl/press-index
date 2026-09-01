@@ -2,26 +2,38 @@ import Image from "next/image";
 import Link from "next/link";
 import { ItemCard } from "@/components/item-card";
 import { prisma } from "@/lib/db";
+import { FEATURED_SYSTEM_SLUGS, TRENDING_GAME_SLUGS } from "@/lib/homepage";
 import { catalogStats } from "@/lib/queries";
+
+async function itemsBySlug(slugs: string[]) {
+  const items = await prisma.catalogItem.findMany({
+    where: { slug: { in: slugs } },
+    include: {
+      platform: true,
+      listings: { where: { status: "active" }, orderBy: { priceCents: "asc" } },
+    },
+  });
+  const bySlug = new Map(items.map((item) => [item.slug, item]));
+  return slugs.flatMap((slug) => {
+    const item = bySlug.get(slug);
+    return item ? [item] : [];
+  });
+}
 
 export default async function HomePage() {
   const stats = await catalogStats();
-  const [platforms, featured, live] = await Promise.all([
-    prisma.platform.findMany({ orderBy: [{ sortRank: "asc" }, { releasedYear: "asc" }] }),
-    prisma.catalogItem.findMany({
-      where: { kind: "game", releasedYear: { lte: 1995 } },
-      include: {
-        platform: true,
-        listings: { where: { status: "active" }, orderBy: { priceCents: "asc" } },
-      },
-      orderBy: { releasedYear: "asc" },
-      take: 8,
-    }),
+  const [trending, systems, live, platforms] = await Promise.all([
+    itemsBySlug(TRENDING_GAME_SLUGS),
+    itemsBySlug(FEATURED_SYSTEM_SLUGS),
     prisma.listing.findMany({
       where: { status: "active" },
       include: { item: { include: { platform: true } } },
       orderBy: { createdAt: "desc" },
       take: 8,
+    }),
+    prisma.platform.findMany({
+      orderBy: [{ sortRank: "asc" }, { releasedYear: "asc" }],
+      take: 12,
     }),
   ]);
 
@@ -39,7 +51,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/20" />
         <div className="relative mx-auto max-w-7xl px-4 py-24 md:py-32">
           <p className="font-mono text-xs tracking-[0.28em] text-[var(--phosphor)] uppercase">
-            The complete video game index
+            Boxed and loose
           </p>
           <h1 className="mt-4 max-w-3xl text-balance font-serif text-4xl leading-[1.1] text-foreground sm:text-5xl md:text-6xl">
             Every system. Every cart. Front, back, and the manual.
@@ -84,16 +96,47 @@ export default async function HomePage() {
         <div className="flex items-end justify-between">
           <div>
             <p className="font-mono text-xs tracking-[0.22em] text-[var(--phosphor)] uppercase">
-              Deep catalog
+              On the floor
             </p>
-            <h2 className="mt-2 font-serif text-3xl text-foreground">The really old ones</h2>
+            <h2 className="mt-2 font-serif text-3xl text-foreground">What people want right now</h2>
           </div>
-          <Link href="/games?decade=1980" className="text-sm text-muted-foreground">
-            1980s index
+          <Link href="/games" className="text-sm text-muted-foreground">
+            Full game index
           </Link>
         </div>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featured.map((item) => (
+          {trending.map((item) => (
+            <ItemCard
+              key={item.id}
+              href={`/catalog/${item.slug}`}
+              title={item.title}
+              platform={item.platform.shortName}
+              platformColor={item.platform.color}
+              year={item.releasedYear}
+              publisher={item.publisher}
+              kind={item.kind}
+              coverUrl={item.coverFrontUrl || undefined}
+              msrpCents={item.msrpCents || undefined}
+              lowestCents={item.listings[0]?.priceCents}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-8">
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="font-mono text-xs tracking-[0.22em] text-[var(--phosphor)] uppercase">
+              Hardware
+            </p>
+            <h2 className="mt-2 font-serif text-3xl text-foreground">Systems that move</h2>
+          </div>
+          <Link href="/systems" className="text-sm text-muted-foreground">
+            All systems
+          </Link>
+        </div>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {systems.map((item) => (
             <ItemCard
               key={item.id}
               href={`/catalog/${item.slug}`}
@@ -133,11 +176,17 @@ export default async function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12">
-        <h2 className="font-serif text-3xl text-foreground">All platforms</h2>
-        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Home consoles, handhelds, computers, and arcade. Open a platform for its
-          games, hardware variants, and accessories.
-        </p>
+        <div className="flex items-end justify-between">
+          <div>
+            <h2 className="font-serif text-3xl text-foreground">Top platforms</h2>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+              The systems collectors actually search. The rest of the museum is one click away.
+            </p>
+          </div>
+          <Link href="/platforms" className="text-sm text-muted-foreground">
+            Every platform
+          </Link>
+        </div>
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {platforms.map((p) => (
             <Link
@@ -145,10 +194,7 @@ export default async function HomePage() {
               href={`/platforms/${p.slug}`}
               className="flex items-center gap-3 rounded-xl border border-border bg-muted/40 px-4 py-3 hover:border-[var(--phosphor)]"
             >
-              <span
-                className="size-3 rounded-full"
-                style={{ background: p.color }}
-              />
+              <span className="size-3 rounded-full" style={{ background: p.color }} />
               <span>
                 <span className="block text-sm text-foreground">{p.name}</span>
                 <span className="block font-mono text-[11px] text-muted-foreground">
