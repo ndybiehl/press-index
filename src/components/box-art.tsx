@@ -34,14 +34,14 @@ export function BoxArt({
     return (
       <article
         className={cn(
-          "relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-sm border border-border bg-black text-left shadow-[0_18px_40px_rgba(0,0,0,0.45)]",
+          "relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-sm border border-border bg-muted text-left shadow-sm dark:bg-zinc-950 dark:shadow-[0_18px_40px_rgba(0,0,0,0.45)]",
           className,
         )}
       >
         <img
           src={coverUrl}
           alt={`${title} ${side === "back" ? "back" : "front"} cover`}
-          className="h-full w-full object-contain bg-black"
+          className="h-full w-full object-contain bg-muted dark:bg-zinc-950"
         />
       </article>
     );
