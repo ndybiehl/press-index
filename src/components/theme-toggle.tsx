@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
-const KEY = "press-index-theme";
+const KEY = "boxed-and-loose-theme";
 
 function applyTheme(theme: "light" | "dark") {
   document.documentElement.classList.toggle("dark", theme === "dark");
@@ -13,7 +13,7 @@ export function ThemeToggle() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(KEY);
+    const stored = window.localStorage.getItem(KEY) || window.localStorage.getItem("press-index-theme");
     const next =
       stored === "light" || stored === "dark"
         ? stored

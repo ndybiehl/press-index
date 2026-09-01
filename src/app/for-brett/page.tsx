@@ -95,7 +95,7 @@ export default async function ForBrettPage() {
             This is not a mockup. Click around. Super Mario Kart has a real box
             scan and a public manual. The NES list is covers, not gray tiles.
             Sign in if you want and list a copy. Password for the demo accounts
-            is <code className="text-primary">pressindex</code>.
+            is <code className="text-primary">boxedandloose</code>.
           </p>
         </div>
       </section>

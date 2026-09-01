@@ -7,7 +7,7 @@ import {
 } from "../src/lib/libretro";
 
 const UA =
-  "PressIndex/1.0 (video game catalog enrichment; r@ndybiehl.com)";
+  "BoxedAndLoose/1.0 (video game catalog enrichment; r@ndybiehl.com)";
 const force = process.argv.includes("--force");
 const limitArg = process.argv.find((arg) => arg.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.slice("--limit=".length)) : undefined;

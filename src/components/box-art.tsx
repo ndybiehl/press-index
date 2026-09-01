@@ -56,7 +56,7 @@ export function BoxArt({
         style={{ boxShadow: `8px 0 0 ${platformColor} inset` }}
       >
         <p className="font-mono text-[10px] tracking-[0.22em] text-[var(--phosphor)] uppercase">
-          Press Index · back
+          Boxed & Loose · back
         </p>
         <h3 className="mt-3 font-serif text-xl leading-tight text-foreground">{title}</h3>
         <p className="mt-1 text-xs text-muted-foreground">

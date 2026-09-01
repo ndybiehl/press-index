@@ -2,10 +2,10 @@ import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypt
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
 
-const COOKIE = "press_index_session";
+const COOKIE = "boxed_and_loose_session";
 
 function secret() {
-  return process.env.AUTH_SECRET ?? "press-index-dev-secret-change-me";
+  return process.env.AUTH_SECRET ?? "boxed-and-loose-dev-secret-change-me";
 }
 
 export function hashPassword(password: string) {

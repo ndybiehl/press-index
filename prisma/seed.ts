@@ -181,11 +181,11 @@ async function main() {
     });
   }
 
-  const passwordHash = hashPassword("pressindex");
+  const passwordHash = hashPassword("boxedandloose");
   const [seller, buyer, vendor] = await Promise.all([
     prisma.user.create({
       data: {
-        email: "seller@pressindex.local",
+        email: "seller@boxedandloose.local",
         name: "Arcade Annex",
         location: "Avon, CO",
         passwordHash,
@@ -194,7 +194,7 @@ async function main() {
     }),
     prisma.user.create({
       data: {
-        email: "buyer@pressindex.local",
+        email: "buyer@boxedandloose.local",
         name: "Casey Collector",
         location: "Denver, CO",
         passwordHash,
@@ -203,7 +203,7 @@ async function main() {
     }),
     prisma.user.create({
       data: {
-        email: "vault@pressindex.local",
+        email: "vault@boxedandloose.local",
         name: "The Manual Vault",
         location: "San Diego, CA",
         passwordHash,
@@ -253,9 +253,9 @@ async function main() {
     listings: listingCount,
     users: 3,
   };
-  console.log("Seeded Press Index", counts);
-  console.log("Demo logins: seller@pressindex.local / buyer@pressindex.local / vault@pressindex.local");
-  console.log("Password: pressindex");
+  console.log("Seeded Boxed & Loose", counts);
+  console.log("Demo logins: seller@boxedandloose.local / buyer@boxedandloose.local / vault@boxedandloose.local");
+  console.log("Password: boxedandloose");
   void buyer;
 }
 

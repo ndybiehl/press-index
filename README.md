@@ -1,10 +1,10 @@
-# Press Index
+# Boxed & Loose
 
 A catalog-first marketplace for buying and selling video games, systems, and accessories.
 
 Live: [https://boxedandloose.vercel.app](https://boxedandloose.vercel.app)
 
-The index covers home consoles, handhelds, computers, and arcade from the Magnavox Odyssey (1972) through current hardware. Every title has a front and back catalog card. Paper manuals are linked to public Internet Archive scans when they exist. Press Index does not host ROMs or redistributed copyrighted PDFs.
+The index covers home consoles, handhelds, computers, and arcade from the Magnavox Odyssey (1972) through current hardware. Every title has a front and back catalog card. Paper manuals are linked to public Internet Archive scans when they exist. Boxed & Loose does not host ROMs or redistributed copyrighted PDFs.
 
 Production (Vercel): set `DATABASE_URL` to Postgres (Neon) plus `AUTH_SECRET` and `NEXT_PUBLIC_APP_URL`. After the first deploy, `npx prisma db push` and `npm run db:copy-sqlite` load the catalog from the local SQLite file.
 
@@ -21,11 +21,11 @@ npm run dev
 
 Open [http://localhost:3450](http://localhost:3450). Needs a Postgres `DATABASE_URL`.
 
-Demo logins (password `pressindex`):
+Demo logins (password `boxedandloose`):
 
-- `buyer@pressindex.local`
-- `seller@pressindex.local`
-- `vault@pressindex.local`
+- `buyer@boxedandloose.local`
+- `seller@boxedandloose.local`
+- `vault@boxedandloose.local`
 
 ## Stripe
 

@@ -46,8 +46,15 @@ export async function POST(request: Request) {
     return NextResponse.redirect(new URL("/login?error=missing", request.url), 303);
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email: email.trim().toLowerCase() },
+  const normalized = email.trim().toLowerCase();
+  const aliases: Record<string, string> = {
+    "buyer@pressindex.local": "buyer@boxedandloose.local",
+    "seller@pressindex.local": "seller@boxedandloose.local",
+    "vault@pressindex.local": "vault@boxedandloose.local",
+  };
+  const lookup = aliases[normalized] ?? normalized;
+  const user = await prisma.user.findFirst({
+    where: { email: { in: [lookup, normalized] } },
   });
   if (!user || !verifyPassword(password, user.passwordHash)) {
     if (wantsJson) {

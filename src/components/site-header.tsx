@@ -15,7 +15,7 @@ export async function SiteHeader() {
             className="size-8 rounded-md object-cover ring-1 ring-primary"
           />
           <span className="font-serif text-xl tracking-tight text-foreground">
-            Press Index
+            Boxed & Loose
           </span>
         </Link>
         <nav className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">

@@ -5,7 +5,7 @@ export function SiteFooter() {
     <footer className="mt-auto border-t border-border bg-background">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 text-sm text-muted-foreground md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="font-serif text-lg text-foreground">Press Index</p>
+          <p className="font-serif text-lg text-foreground">Boxed & Loose</p>
           <p className="mt-2 max-w-md leading-relaxed">
             A buy-and-sell catalog of video games, systems, and accessories from
             the Magnavox Odyssey to current hardware. Covers are catalog cards.

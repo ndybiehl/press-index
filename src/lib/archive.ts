@@ -32,7 +32,7 @@ export async function searchArchiveManuals(
     "https://archive.org/advancedsearch.php?" +
     `q=${encodeURIComponent(q)}&fl[]=identifier&fl[]=title&output=json&rows=12`;
   const res = await fetch(request, {
-    headers: { "user-agent": "PressIndex/1.0 (catalog; r@ndybiehl.com)" },
+    headers: { "user-agent": "BoxedAndLoose/1.0 (catalog; r@ndybiehl.com)" },
     next: { revalidate: 86400 },
   });
   if (!res.ok) return [];

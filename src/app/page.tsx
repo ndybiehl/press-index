@@ -45,7 +45,7 @@ export default async function HomePage() {
             Every system. Every cart. Front, back, and the manual.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Press Index is a marketplace and a catalog: Magnavox Odyssey overlays
+            Boxed & Loose is a marketplace and a catalog: Magnavox Odyssey overlays
             through Switch 2 Game Cards, plus the controllers, light guns, memory
             cards, and oddball add-ons that shipped with them.
           </p>

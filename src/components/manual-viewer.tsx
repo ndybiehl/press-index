@@ -50,7 +50,7 @@ export async function ManualViewer({
           >
             Open the original item
           </a>
-          . Press Index does not host copyrighted PDFs.
+          . Boxed & Loose does not host copyrighted PDFs.
         </p>
       </div>
     );

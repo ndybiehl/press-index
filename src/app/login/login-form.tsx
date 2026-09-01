@@ -39,7 +39,7 @@ export function LoginForm({
           inputMode="email"
           autoComplete="username"
           required
-          defaultValue="buyer@pressindex.local"
+          defaultValue="buyer@boxedandloose.local"
         />
       </div>
       <div className="space-y-2">
@@ -50,7 +50,7 @@ export function LoginForm({
           type="password"
           autoComplete="current-password"
           required
-          defaultValue="pressindex"
+          defaultValue="boxedandloose"
         />
       </div>
       {message ? <p className="text-sm text-destructive">{message}</p> : null}

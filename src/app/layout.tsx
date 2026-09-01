@@ -22,8 +22,8 @@ const instrument = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: {
-    default: "Press Index",
-    template: "%s · Press Index",
+    default: "Boxed & Loose",
+    template: "%s · Boxed & Loose",
   },
   description:
     "Buy and sell video games, systems, and accessories. Full index from the Magnavox Odyssey to current hardware, with covers and manuals.",
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("press-index-theme");var d=t?t==="dark":!window.matchMedia("(prefers-color-scheme: light)").matches;document.documentElement.classList.toggle("dark",d);}catch(e){}`,
+            __html: `try{var t=localStorage.getItem("boxed-and-loose-theme")||localStorage.getItem("press-index-theme");var d=t?t==="dark":!window.matchMedia("(prefers-color-scheme: light)").matches;document.documentElement.classList.toggle("dark",d);}catch(e){}`,
           }}
         />
       </head>

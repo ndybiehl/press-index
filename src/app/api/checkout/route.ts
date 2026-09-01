@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/listings/${listing.id}`,
     customer_email: user.email,
-    integration_identifier: `pressidx_${Math.random().toString(36).slice(2, 10)}`,
+    integration_identifier: `boxedloose_${Math.random().toString(36).slice(2, 10)}`,
     line_items: [
       {
         quantity: 1,
